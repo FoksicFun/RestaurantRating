@@ -25,28 +25,6 @@
 - **Lombok** (для упрощения кода)
 - **Maven** (сборка проекта)
 
-## 📁 Структура проекта
-
-restaurant-rating/
-├── src/main/java/com/example/restaurantrating/
-│ ├── entity/ # Сущности базы данных
-│ │ ├── Visitor.java # Посетитель
-│ │ ├── Restaurant.java # Ресторан
-│ │ └── Review.java # Отзыв
-│ ├── repository/ # Репозитории (Data Layer)
-│ │ ├── VisitorRepository.java
-│ │ ├── RestaurantRepository.java
-│ │ └── ReviewRepository.java
-│ ├── service/ # Сервисы (Business Logic)
-│ │ ├── VisitorService.java
-│ │ ├── RestaurantService.java
-│ │ └── ReviewService.java
-│ ├── Main.java # Тестирование (CommandLineRunner)
-│ └── RestaurantRatingApplication.java
-└── src/main/resources/
-└── application.properties # Настройки приложения
-
-
 ## 🚀 Запуск проекта
 
 ### Требования
@@ -55,4 +33,4 @@ restaurant-rating/
 
 ### Установка и запуск
 
-Скачать проект и запустить файл RestaurantRatingApplication
+Скачать проект и запустить файл RestaurantRatingApplication в src/main/java
