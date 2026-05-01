@@ -1,35 +1,63 @@
 package com.example.restaurantrating.service;
 
+import com.example.restaurantrating.dto.RestaurantRequest;
+import com.example.restaurantrating.dto.RestaurantResponse;
 import com.example.restaurantrating.entity.Restaurant;
 import com.example.restaurantrating.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class RestaurantService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    // Сохранить ресторан
-    public Restaurant save(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
+    @Transactional
+    public RestaurantResponse save(RestaurantRequest request) {
+        Restaurant restaurant = new Restaurant(
+                request.name(),
+                request.description(),
+                request.cuisineType(),
+                request.averageCheckPerPerson()
+        );
+
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+        return mapToResponse(savedRestaurant);
     }
 
-    // Удалить ресторан
-    public void remove(Restaurant restaurant) {
-        restaurantRepository.delete(restaurant);
+    @Transactional
+    public void remove(Long id) {
+        restaurantRepository.deleteById(id);
     }
 
-    // Найти все рестораны
-    public List<Restaurant> findAll() {
-        return restaurantRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<RestaurantResponse> findAll() {
+        return restaurantRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
-    // Найти ресторан по ID
-    public Restaurant findById(Long id) {
-        return restaurantRepository.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public RestaurantResponse findById(Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + id));
+        return mapToResponse(restaurant);
+    }
+
+    private RestaurantResponse mapToResponse(Restaurant restaurant) {
+        return new RestaurantResponse(
+                restaurant.getId(),
+                restaurant.getName(),
+                restaurant.getDescription(),
+                restaurant.getCuisineType(),
+                restaurant.getAverageCheckPerPerson(),
+                restaurant.getRating()
+        );
     }
 }
