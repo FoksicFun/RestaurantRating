@@ -35,3 +35,25 @@
 ### Установка и запуск
 
 Скачать проект и запустить файл RestaurantRatingApplication в src/main/java
+
+Для тестирования базы данных проект запустить и не выключать.
+Поля на странице должны быть заполнены так:
+Сохранить настройки - Generic H2 (Embedded)
+Имя настройки - Generic H2 (Embedded)
+Класс драйвера - org.h2.Driver
+JDBC URL - jdbc:h2:mem:restaurantdb
+Имя пользователя - sa
+Пароль - оставить пустым
+
+Команды для проверки:
+- Посмотреть всех посетителей
+SELECT * FROM visitors;
+
+- Посмотреть все рестораны
+SELECT * FROM restaurants;
+
+- Посмотреть все отзывы
+SELECT * FROM reviews;
+
+- Посмотреть рестораны с рейтингами
+SELECT name, rating FROM restaurants;
