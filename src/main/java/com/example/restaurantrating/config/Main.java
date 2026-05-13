@@ -84,5 +84,6 @@ public class Main implements CommandLineRunner {
         System.out.println("ГОТОВО! API доступно");
         System.out.println("Swagger UI: http://localhost:8080/swagger-ui.html");
         System.out.println("API Docs: http://localhost:8080/v3/api-docs");
+        System.out.println("H2 Console: http://localhost:8080/h2-console");
     }
 }
