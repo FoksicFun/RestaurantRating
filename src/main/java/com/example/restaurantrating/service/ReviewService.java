@@ -42,7 +42,7 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
 
         // Пересчитываем рейтинг ресторана
-        restaurant.getReviews().add(savedReview);  // Теперь работает!
+        restaurant.getReviews().add(savedReview);
         restaurant.recalculateRating();
         restaurantRepository.save(restaurant);
 
