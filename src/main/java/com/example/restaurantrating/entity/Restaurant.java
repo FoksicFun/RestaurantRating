@@ -48,7 +48,7 @@ public class Restaurant {
             this.rating = BigDecimal.ZERO;
         } else {
             int totalRating = reviews.stream()
-                    .mapToInt(Review::getRating)  // используем mapToInt вместо map
+                    .mapToInt(Review::getRating)
                     .sum();
 
             this.rating = BigDecimal.valueOf((double) totalRating / reviews.size())
