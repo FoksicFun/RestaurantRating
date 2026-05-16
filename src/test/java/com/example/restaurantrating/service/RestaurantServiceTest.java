@@ -31,7 +31,7 @@ class RestaurantServiceTest {
 
     @Test
     void save_shouldCreateRestaurant() {
-        // Arrange
+
         RestaurantRequest request = new RestaurantRequest(
                 "La Trattoria", "Итальянская кухня",
                 Restaurant.CuisineType.ITALIAN, 1500
@@ -46,10 +46,8 @@ class RestaurantServiceTest {
 
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(savedRestaurant);
 
-        // Act
         RestaurantResponse response = restaurantService.save(request);
 
-        // Assert
         assertNotNull(response);
         assertEquals(1L, response.id());
         assertEquals("La Trattoria", response.name());
@@ -58,19 +56,16 @@ class RestaurantServiceTest {
 
     @Test
     void findById_shouldReturnRestaurant() {
-        // Arrange
+
         Restaurant restaurant = new Restaurant("Sakura", "Японская кухня",
                 Restaurant.CuisineType.JAPANESE, 2000);
         restaurant.setId(2L);
         restaurant.setRating(BigDecimal.valueOf(4.8));
 
-        // ← ВАЖНО: any(Long.class) вместо anyLong()
         when(restaurantRepository.findById(any(Long.class))).thenReturn(Optional.of(restaurant));
 
-        // Act
         RestaurantResponse response = restaurantService.findById(2L);
 
-        // Assert
         assertNotNull(response);
         assertEquals("Sakura", response.name());
         assertEquals(BigDecimal.valueOf(4.8), response.rating());
@@ -78,10 +73,9 @@ class RestaurantServiceTest {
 
     @Test
     void remove_shouldDeleteRestaurant() {
-        // Act
+
         restaurantService.remove(1L);
 
-        // Assert
         verify(restaurantRepository, times(1)).deleteById(1L);
     }
 }

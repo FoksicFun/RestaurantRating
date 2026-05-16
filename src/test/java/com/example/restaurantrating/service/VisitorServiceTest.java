@@ -31,19 +31,16 @@ class VisitorServiceTest {
 
     @Test
     void save_shouldCreateVisitor() {
-        // Arrange
+
         VisitorRequest request = new VisitorRequest("Иван", 25, "M");
 
-        // Создаём объект, который вернёт репозиторий (с уже установленным ID)
         Visitor savedVisitor = new Visitor("Иван", 25, "M");
         savedVisitor.setId(1L);
 
         when(visitorRepository.save(any(Visitor.class))).thenReturn(savedVisitor);
 
-        // Act
         VisitorResponse response = visitorService.save(request);
 
-        // Assert
         assertNotNull(response);
         assertEquals(1L, response.id());
         assertEquals("Иван", response.name());
@@ -52,17 +49,14 @@ class VisitorServiceTest {
 
     @Test
     void findById_shouldReturnVisitor() {
-        // Arrange
+
         Visitor visitor = new Visitor("Мария", 30, "F");
         visitor.setId(2L);
 
-        // ← ВАЖНО: используем any() вместо anyLong() для Optional
         when(visitorRepository.findById(any(Long.class))).thenReturn(Optional.of(visitor));
 
-        // Act
         VisitorResponse response = visitorService.findById(2L);
 
-        // Assert
         assertNotNull(response);
         assertEquals(2L, response.id());
         assertEquals("Мария", response.name());
@@ -70,10 +64,10 @@ class VisitorServiceTest {
 
     @Test
     void findById_shouldThrowException_whenNotFound() {
-        // Arrange
+
         when(visitorRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-        // Act & Assert
+
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             visitorService.findById(999L);
         });
@@ -83,10 +77,9 @@ class VisitorServiceTest {
 
     @Test
     void remove_shouldDeleteVisitor() {
-        // Act
+
         visitorService.remove(1L);
 
-        // Assert
         verify(visitorRepository, times(1)).deleteById(1L);
     }
 }
