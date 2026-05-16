@@ -40,7 +40,7 @@ class ReviewServiceTest {
 
     @Test
     void save_shouldCreateReview() {
-        // Arrange
+
         Visitor visitor = new Visitor("Иван", 25, "M");
         visitor.setId(1L);
 
@@ -52,15 +52,12 @@ class ReviewServiceTest {
         Review review = new Review(visitor, restaurant, 5, "Отлично!");
         review.setId(10L);
 
-        // ← ВАЖНО: any(Long.class) вместо anyLong()
         when(visitorRepository.findById(any(Long.class))).thenReturn(Optional.of(visitor));
         when(restaurantRepository.findById(any(Long.class))).thenReturn(Optional.of(restaurant));
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
 
-        // Act
         ReviewResponse response = reviewService.save(request);
 
-        // Assert
         assertNotNull(response);
         assertEquals(10L, response.id());
         assertEquals(5, response.rating());
@@ -70,7 +67,7 @@ class ReviewServiceTest {
 
     @Test
     void remove_shouldDeleteReview() {
-        // Arrange
+
         Visitor visitor = new Visitor("Иван", 25, "M");
         visitor.setId(1L);
 
@@ -81,14 +78,11 @@ class ReviewServiceTest {
         Review review = new Review(visitor, restaurant, 5, "Отлично!");
         review.setId(10L);
 
-        // ← ВАЖНО: any(Long.class)
         when(reviewRepository.findById(any(Long.class))).thenReturn(Optional.of(review));
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 
-        // Act
         reviewService.remove(10L);
 
-        // Assert
         verify(reviewRepository, times(1)).delete(review);
         verify(restaurantRepository, times(1)).save(restaurant);
     }
