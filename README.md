@@ -57,3 +57,5 @@ SELECT * FROM reviews;
 
 - Посмотреть рестораны с рейтингами
 SELECT name, rating FROM restaurants;
+
+Добавлены Unit тесты. Для запуска тестов использовать команду mvn test.
